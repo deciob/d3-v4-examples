@@ -12,3 +12,8 @@
 .axis--y path {
   display: none;
 }
+
+.bar {
+  fill: steelblue;
+  fill-opacity: .9;
+}
