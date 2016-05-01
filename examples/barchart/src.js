@@ -1,6 +1,6 @@
 'use strict';
 
-const margin = {top: 20, right: 30, bottom: 40, left: 220};
+const margin = {top: 20, right: 30, bottom: 30, left: 220};
 const width = 960 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 const percentFormat = d3.format('.0%');
@@ -95,9 +95,6 @@ function drawBars(el, data, t) {
     .append('rect')
       .attr('class', d => d.geoCode === 'WLD' ? 'bar wld' : 'bar')
       .attr('x', 5)
-      .attr('y', d => yScale(yAccessor(d)))
-      .attr('width', d => xScale(xAccessor(d)))
-      .attr('height', yScale.bandwidth())
     .merge(bars).transition(t)
       .attr('y', d => yScale(yAccessor(d)))
       .attr('width', d => xScale(xAccessor(d)))
