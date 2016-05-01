@@ -5,5 +5,9 @@ env:
 extends:
     "eslint:recommended"
 
+globals:
+    d3: true
+
 rules:
     no-cond-assign: 0
+    comma-dangle: [1, "always-multiline"]

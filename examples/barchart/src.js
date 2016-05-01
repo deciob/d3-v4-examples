@@ -4,7 +4,6 @@ const margin = {top: 20, right: 30, bottom: 40, left: 220};
 const width = 960 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 const percentFormat = d3.format('.0%');
-const startYear = '1970';
 const leftPadding =  5;
 
 const delay = function(d, i) {
@@ -62,7 +61,7 @@ const yScale = d3.scaleBand()
     .rangeRound([0, height], 0.1)
     .padding(0.1);
 
-function drawXAxis(el, data) {
+function drawXAxis(el) {
   el.append('g')
       .attr('class', 'axis axis--x')
       .attr('transform', `translate(${leftPadding},${height})`)
@@ -114,37 +113,37 @@ const svg = d3.select('.chart').append('svg')
   .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
-const data = fetch('../data/adjusted-net-enrolment-rate-primary-female-percentage.csv')
-.then((res) => res.text())
-.then((res) => {
-  const data = prepareData(d3.csvParse(res));
-  const years = Object.keys(data).map(d => +d);
-  const lastYear = years[years.length - 1];
-  let startYear = years[0];
-  let selectedData = removeGeoGroupsWithNoData(sortData(data[startYear]));
-  let geoAreas = selectedData.map(yAccessor);
-
-  d3.select('.year').text(startYear);
-
-  yScale.domain(geoAreas);
-  drawXAxis(svg, selectedData);
-  drawYAxis(svg, selectedData);
-  drawBars(svg, selectedData);
-
-  const interval = d3.interval((elapsed) => {
-    const t = d3.transition().duration(400);
-
-    startYear += 1;
-    selectedData = removeGeoGroupsWithNoData(sortData(data[startYear]));
+fetch('../data/adjusted-net-enrolment-rate-primary-female-percentage.csv')
+  .then((res) => res.text())
+  .then((res) => {
+    const data = prepareData(d3.csvParse(res));
+    const years = Object.keys(data).map(d => +d);
+    const lastYear = years[years.length - 1];
+    let startYear = years[0];
+    let selectedData = removeGeoGroupsWithNoData(sortData(data[startYear]));
+    let geoAreas = selectedData.map(yAccessor);
 
     d3.select('.year').text(startYear);
 
-    yScale.domain(selectedData.map(yAccessor));
-    drawYAxis(svg, selectedData, t);
-    drawBars(svg, selectedData, t);
+    yScale.domain(geoAreas);
+    drawXAxis(svg, selectedData);
+    drawYAxis(svg, selectedData);
+    drawBars(svg, selectedData);
 
-    if (startYear === lastYear) {
-      interval.stop();
-    }
-  }, 500);
-});
+    const interval = d3.interval(() => {
+      const t = d3.transition().duration(400);
+
+      startYear += 1;
+      selectedData = removeGeoGroupsWithNoData(sortData(data[startYear]));
+
+      d3.select('.year').text(startYear);
+
+      yScale.domain(selectedData.map(yAccessor));
+      drawYAxis(svg, selectedData, t);
+      drawBars(svg, selectedData, t);
+
+      if (startYear === lastYear) {
+        interval.stop();
+      }
+    }, 500);
+  });
