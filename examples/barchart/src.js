@@ -14,7 +14,7 @@ function sortData(data) {
   return data.sort((a, b) => b.value - a.value);
 }
 
-function removeGeoAreassWithNoData(data) {
+function removeGeoAreasWithNoData(data) {
   return data.filter(d => d.value);
 }
 
@@ -120,7 +120,7 @@ fetch('../data/adjusted-net-enrolment-rate-primary-female-percentage.csv')
     const years = Object.keys(data).map(d => +d);
     const lastYear = years[years.length - 1];
     let startYear = years[0];
-    let selectedData = removeGeoAreassWithNoData(sortData(data[startYear]));
+    let selectedData = removeGeoAreasWithNoData(sortData(data[startYear]));
     let geoAreas = selectedData.map(yAccessor);
 
     d3.select('.year').text(startYear);
@@ -134,7 +134,7 @@ fetch('../data/adjusted-net-enrolment-rate-primary-female-percentage.csv')
       const t = d3.transition().duration(400);
 
       startYear += 1;
-      selectedData = removeGeoAreassWithNoData(sortData(data[startYear]));
+      selectedData = removeGeoAreasWithNoData(sortData(data[startYear]));
 
       d3.select('.year').text(startYear);
 
