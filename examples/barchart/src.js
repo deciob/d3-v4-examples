@@ -19,7 +19,7 @@ function removeGeoAreasWithNoData(data) {
 }
 
 function prepareData(data) {
-  const allDataPts = data.reduce((accumulator, d) => {
+  return data.reduce((accumulator, d) => {
     Object.keys(d).forEach((k) => {
       if (!Number.isInteger(+k)) { return; }
       let value;
@@ -41,8 +41,6 @@ function prepareData(data) {
     });
     return accumulator;
   }, {});
-
-  return allDataPts;
 }
 
 function xAccessor(d) {
