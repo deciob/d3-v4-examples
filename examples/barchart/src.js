@@ -4,7 +4,7 @@ const margin = {top: 20, right: 30, bottom: 30, left: 220};
 const width = 960 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 const percentFormat = d3.format('.0%');
-const leftPadding =  5;
+const leftPadding = 5;
 
 const delay = function(d, i) {
   return i * 40;
@@ -94,7 +94,7 @@ function drawBars(el, data, t) {
   bars.enter()
     .append('rect')
       .attr('class', d => d.geoCode === 'WLD' ? 'bar wld' : 'bar')
-      .attr('x', 5)
+      .attr('x', leftPadding)
     .merge(bars).transition(t)
       .attr('y', d => yScale(yAccessor(d)))
       .attr('width', d => xScale(xAccessor(d)))
@@ -140,5 +140,5 @@ fetch('../data/adjusted-net-enrolment-rate-primary-female-percentage.csv')
       if (startYear === lastYear) {
         interval.stop();
       }
-    }, 500);
+    }, 1000);
   });
