@@ -9,6 +9,9 @@ globals:
     d3: true
     d3_bar: true
 
+parserOptions:
+    sourceType: "module"
+
 rules:
     no-cond-assign: 0
     comma-dangle: [1, "always-multiline"]
