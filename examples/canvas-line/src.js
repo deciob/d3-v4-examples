@@ -45,8 +45,8 @@ function drawLine(data) {
 }
 
 //fetch('./data/nitrogen-dioxide-2016-09-01-161001120009.csv')
-//fetch('./data/nitrogen-dioxide-oct-2015-2016.csv')
-fetch('./data/test.csv')
+fetch('./data/nitrogen-dioxide-oct-2015-2016.csv')
+//fetch('./data/test.csv')
   .then((res) => res.text())
   .then((res) => {
     const data = prepareData(res);
@@ -74,6 +74,6 @@ fetch('./data/test.csv')
         });
         drawLine(interpolatedData);
         if (elapsed > 2000) t.stop();
-      }, 50);
-    }, 1000);
+      }, 30);
+    }, 2000);
   });
